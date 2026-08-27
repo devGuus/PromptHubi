@@ -1,0 +1,49 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  slug      String   @unique
+  createdAt DateTime @default(now())
+  prompts   Prompt[]
+}
+
+model Tag {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  prompts Prompt[]
+}
+
+model Prompt {
+  id          String   @id @default(cuid())
+  title       String
+  description String   @default("")
+  content     String
+  favorite    Boolean  @default(false)
+
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  tags        Tag[]
+
+  // Reserved for future auth. No relation yet on purpose - no User model
+  // exists. When auth ships, add `user User? @relation(fields: [userId], references: [id])`.
+  userId      String?
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([categoryId])
+  @@index([favorite])
+  @@index([userId])
+}
