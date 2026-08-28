@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { promptFormSchema } from "@/lib/validation";
+import { requireSiteAccess } from "@/lib/require-site-access";
 import type { PromptFormState } from "@/types";
 
 function revalidatePromptSurfaces(id?: string) {
@@ -28,6 +29,8 @@ export async function createPrompt(
   _prevState: PromptFormState,
   formData: FormData,
 ): Promise<PromptFormState> {
+  await requireSiteAccess();
+
   const parsed = promptFormSchema.safeParse(extractFormValues(formData));
   if (!parsed.success) {
     return { errors: parsed.error.flatten().fieldErrors, message: "Corrija os erros abaixo." };
@@ -56,6 +59,8 @@ export async function updatePrompt(
   _prevState: PromptFormState,
   formData: FormData,
 ): Promise<PromptFormState> {
+  await requireSiteAccess();
+
   const parsed = promptFormSchema.safeParse(extractFormValues(formData));
   if (!parsed.success) {
     return { errors: parsed.error.flatten().fieldErrors, message: "Corrija os erros abaixo." };
@@ -88,6 +93,8 @@ export async function deletePrompt(
   _prevState: DeleteState,
   _formData: FormData,
 ): Promise<DeleteState> {
+  await requireSiteAccess();
+
   try {
     await prisma.prompt.delete({ where: { id } });
   } catch {
@@ -99,6 +106,8 @@ export async function deletePrompt(
 }
 
 export async function duplicatePrompt(id: string) {
+  await requireSiteAccess();
+
   const original = await prisma.prompt.findUnique({ where: { id }, include: { tags: true } });
   if (!original) return;
 
@@ -118,6 +127,8 @@ export async function duplicatePrompt(id: string) {
 }
 
 export async function toggleFavorite(id: string) {
+  await requireSiteAccess();
+
   const prompt = await prisma.prompt.findUnique({ where: { id }, select: { favorite: true } });
   if (!prompt) return;
 

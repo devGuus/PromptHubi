@@ -1,4 +1,7 @@
 import { ThemeToggle } from "@/components/theme/theme-toggle";
+import { SubmitButton } from "@/components/ui/submit-button";
+import { logout } from "@/actions/site-auth-actions";
+import { isAccessGateEnabled } from "@/lib/site-auth";
 
 export default function SettingsPage() {
   return (
@@ -14,6 +17,20 @@ export default function SettingsPage() {
         </div>
         <ThemeToggle />
       </section>
+
+      {isAccessGateEnabled() ? (
+        <section className="flex items-center justify-between rounded-xl border border-border bg-card p-4">
+          <div>
+            <h2 className="text-sm font-medium text-foreground">Acesso</h2>
+            <p className="mt-0.5 text-sm text-muted-foreground">Sair deste dispositivo.</p>
+          </div>
+          <form action={logout}>
+            <SubmitButton variant="secondary" pendingLabel="Saindo...">
+              Sair
+            </SubmitButton>
+          </form>
+        </section>
+      ) : null}
 
       <section className="rounded-xl border border-border bg-card p-4">
         <h2 className="text-sm font-medium text-foreground">Sobre</h2>

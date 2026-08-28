@@ -2,6 +2,6 @@
 
 import { RouteError } from "@/components/ui/route-error";
 
-export default function DashboardError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function RootError({ reset }: { error: Error & { digest?: string }; reset: () => void }) {
   return <RouteError reset={reset} />;
 }
