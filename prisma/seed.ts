@@ -17,8 +17,6 @@ const CATEGORIES = [
 ];
 
 async function main() {
-  await prisma.$queryRawUnsafe("PRAGMA journal_mode=WAL;");
-
   for (const category of CATEGORIES) {
     await prisma.category.upsert({
       where: { slug: category.slug },

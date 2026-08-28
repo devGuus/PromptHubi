@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { ToastProvider } from "@/components/ui/toast";
 import { AppShell } from "@/components/layout/app-shell";
+import { FirebaseAnalytics } from "@/components/analytics/firebase-analytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -34,6 +35,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <AppShell>{children}</AppShell>
           </ToastProvider>
         </ThemeProvider>
+        <FirebaseAnalytics />
       </body>
     </html>
   );

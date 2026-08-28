@@ -6,13 +6,14 @@ function buildWhere(filters: PromptFilters): Prisma.PromptWhereInput {
   const conditions: Prisma.PromptWhereInput[] = [];
 
   if (filters.q) {
+    const q = filters.q;
     conditions.push({
       OR: [
-        { title: { contains: filters.q } },
-        { description: { contains: filters.q } },
-        { content: { contains: filters.q } },
-        { category: { name: { contains: filters.q } } },
-        { tags: { some: { name: { contains: filters.q } } } },
+        { title: { contains: q, mode: "insensitive" } },
+        { description: { contains: q, mode: "insensitive" } },
+        { content: { contains: q, mode: "insensitive" } },
+        { category: { name: { contains: q, mode: "insensitive" } } },
+        { tags: { some: { name: { contains: q, mode: "insensitive" } } } },
       ],
     });
   }
