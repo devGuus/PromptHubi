@@ -35,7 +35,7 @@ export default function SettingsPage() {
       <section className="rounded-xl border border-border bg-card p-4">
         <h2 className="text-sm font-medium text-foreground">Sobre</h2>
         <p className="mt-1 text-sm text-muted-foreground">
-          PromptHubi — biblioteca interna de prompts da Hubi Happiness.
+          Biblioteca interna de prompts da Hubi Happiness.
         </p>
       </section>
     </div>
