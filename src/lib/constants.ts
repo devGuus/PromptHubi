@@ -31,4 +31,4 @@ export const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 
 export const DEFAULT_SORT: SortOption = "recent";
 
-export const LIST_PAGE_SIZE_DASHBOARD = 6;
+export const LIST_PAGE_SIZE_DASHBOARD = 4;
